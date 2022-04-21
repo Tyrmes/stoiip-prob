@@ -30,15 +30,16 @@ norm_values = norm.rvs(loc=0.5, scale=0.3, size=1000)
 expon_values = expon.rvs(loc=0, scale=0.3, size=1000)
 lognorm_values = lognorm.rvs(s=0.95, size=1000)
 triang_values = triang.rvs(c=0.3, loc=0, scale=1, size=1000)
-unif_values = uniform.rvs(loc=0.5, scale=0.3, size=1000)
+unif_values = uniform.rvs(loc=0, scale=2, size=1000)
 
 # %% Define values for porosity according to each distribution
 
-porosity_norm = norm_values[np.logical_and(norm_values >= 0, norm_values <= 1)]
-porosity_exp = expon_values[np.logical_and(expon_values >= 0, expon_values <= 1)]
-porosity_log = lognorm_values[np.logical_and(lognorm_values >= 0, lognorm_values <= 1)]
-porosity_tria = triang_values[np.logical_and(triang_values >= 0, triang_values <= 1)]
-porosity_unif = unif_values[np.logical_and(unif_values >= 0, unif_values <= 1)]
+porosity_norm = norm_values[np.logical_and(norm_values >= 0, norm_values <= 0.4)]
+porosity_exp = expon_values[np.logical_and(expon_values >= 0, expon_values <= 0.4)]
+porosity_log = lognorm_values[np.logical_and(lognorm_values >= 0, lognorm_values <= 0.4)]
+porosity_tria = triang_values[np.logical_and(triang_values >= 0, triang_values <= 0.4)]
+porosity_unif = unif_values [np.logical_and(unif_values >= 0, unif_values <= 0.4)]
+print(porosity_unif)
 
 # %% Define values for saturation according to each distribution
 
@@ -46,7 +47,6 @@ saturation_norm = norm_values[np.logical_and(norm_values >= 0, norm_values <= 1)
 saturation_exp = expon_values[np.logical_and(expon_values >= 0, expon_values <= 1)]
 saturation_log = lognorm_values[np.logical_and(lognorm_values >= 0, lognorm_values <= 1)]
 saturation_tria = triang_values[np.logical_and(triang_values >= 0, triang_values <= 1)]
-saturation_unif = unif_values[np.logical_and(unif_values >= 0, unif_values <= 1)]
 
 # %% Plotting distribution for porosity and saturation
 
@@ -67,7 +67,7 @@ norm_val2 = norm.rvs(loc=50, scale=100, size=1000)
 expon_val2 = expon.rvs(loc=50, scale=100, size=1000)
 lognorm_val2 = lognorm.rvs(s=0.95, loc=50, scale=100, size=1000)
 triang_val2 = triang.rvs(c=0.3, loc=5, scale=10, size=1000)
-unif_val2 = uniform.rvs(loc=50, scale=100, size=1000)
+unif_val2 = uniform.rvs(loc=1, scale=500, size=1000)
 
 # %% Define values for area according to each distribution
 
@@ -75,7 +75,8 @@ area_norm = norm_val2[np.where(norm_val2 >= 0)]
 area_exp = expon_val2[np.where(expon_val2 >= 0)]
 area_log = lognorm_values[np.where(lognorm_values >= 0)]
 area_triag = triang_val2[np.where(triang_val2 >= 0)]
-area_unif = unif_val2[np.where(unif_val2 >= 0)]
+area_unif = unif_val2[np.logical_and(unif_val2 >= 50, unif_val2 <= 500)]
+
 
 # %% Define values for thickness according to each distribution
 
@@ -83,7 +84,7 @@ thickness_norm = norm_val2[np.where(norm_val2 >= 0)]
 thickness_exp = expon_val2[np.where(expon_val2 >= 0)]
 thickness_log = lognorm_val2[np.where(lognorm_val2 >= 0)]
 thickness_triag = triang_val2[np.where(triang_val2 >= 0)]
-thickness_unif = unif_val2[np.where(unif_val2 >= 0)]
+thickness_unif = unif_val2[np.logical_and(unif_val2 >= 1, unif_val2 <= 100)]
 
 # %% Plotting the distributions
 
