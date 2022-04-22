@@ -24,64 +24,111 @@ boi = np.array([1.01, 1.1, 1.12])
 
 print(np.around(stoiip(area, h, poro, swc, boi), 2))
 
-# %% Create random values for each distribution
+# %% Defining random values for porosity from norm_values variable
 
-norm_values = norm.rvs(loc=0.5, scale=0.3, size=1000)
-expon_values = expon.rvs(loc=0, scale=0.3, size=1000)
-lognorm_values = lognorm.rvs(s=0.95, size=1000)
-triang_values = triang.rvs(c=0.3, loc=0, scale=1, size=1000)
+# Normal distribution
+norm_values = norm.rvs(loc=0.2, scale=0.3, size=1000)
+porosity_norm = np.where(norm_values < 0, 0, norm_values)
+porosity_norm = np.where(porosity_norm > 0.4, 0.4, porosity_norm)
 
-# %% Define values for porosity according to each distribution
+# Exponential distribution
+expon_values = expon.rvs(loc=0, scale=0.1, size=1000)
+porosity_exp = np.where(expon_values < 0, 0, expon_values)
+porosity_exp = np.where(expon_values > 0.4, 0.4, expon_values)
 
-porosity_norm = norm_values[np.logical_and(norm_values >= 0, norm_values <= 0.4)]
-porosity_exp = expon_values[np.logical_and(expon_values >= 0, expon_values <= 0.4)]
-porosity_log = lognorm_values[np.logical_and(lognorm_values >= 0, lognorm_values <= 0.4)]
-porosity_tria = triang_values[np.logical_and(triang_values >= 0, triang_values <= 0.4)]
+# Lognormal distribution
+lognorm_values = lognorm.rvs(s=0.8, loc=0, scale=0.2, size=1000)
+porosity_log = np.where(lognorm_values < 0, 0, lognorm_values)
+porosity_log = np.where(lognorm_values > 0.4, 0.4, lognorm_values)
+
+# Triangular distribution
+triang_values = triang.rvs(c=0.3, loc=0, scale=0.4, size=1000)
+porosity_tria = np.where(triang_values < 0, 0, lognorm_values)
+
+# Uniform distribution
 porosity_unif = uniform.rvs(loc=0, scale=0.4, size=1000)
 
 # %% Define values for saturation according to each distribution
 
-saturation_norm = norm_values[np.logical_and(norm_values >= 0, norm_values <= 1)]
-saturation_exp = expon_values[np.logical_and(expon_values >= 0, expon_values <= 1)]
-saturation_log = lognorm_values[np.logical_and(lognorm_values >= 0, lognorm_values <= 1)]
-saturation_tria = triang_values[np.logical_and(triang_values >= 0, triang_values <= 1)]
+# Normal distribution
+saturation_norm = norm.rvs(loc=0.4, scale=0.2, size=1000)
+saturation_norm = np.where(saturation_norm < 0, 0, saturation_norm)
+saturation_norm = np.where(saturation_norm > 1, 1, saturation_norm)
 
-# %% Plotting distribution for porosity and saturation
+# Exponential distribution
+saturation_exp = expon.rvs(loc=0, scale=0.2, size=1000)
+saturation_exp = np.where(saturation_exp < 0, 0, saturation_exp)
+saturation_exp = np.where(saturation_exp > 1, 1, saturation_exp)
 
-# plt.hist(porosity_norm)
-# plt.show()
+# Lognormal distribution
+saturation_log = lognorm.rvs(s=0.8, loc=0, scale=0.2, size=1000)
+saturation_log = np.where(saturation_log < 0, 0, saturation_log)
+saturation_log = np.where(saturation_log > 1, 1, saturation_log)
+
+# triangular distribution
+saturation_tria = triang.rvs(c=0.3, loc=0, scale=1, size=1000)
 
 # %% Define values for Boi according to each distribution
 
-boi_norm = norm_values[np.logical_and(norm_values >= 1, norm_values <= 2)]
-boi_exp = expon_values[np.logical_and(expon_values >= 1, expon_values <= 2)]
-boi_log = lognorm_values[np.logical_and(lognorm_values >= 1, lognorm_values <= 2)]
-boi_triag = triang_values[np.logical_and(triang_values >= 1, triang_values <= 2)]
+# Normal distribution
+boi_norm = norm.rvs(loc=1.5, scale=0.5, size=1000)
+boi_norm = np.where(boi_norm < 1, 1, boi_norm)
+boi_norm = np.where(boi_norm > 2, 2, boi_norm)
+
+# Exponential distribution
+boi_exp = expon.rvs(loc=1, scale=0.2, size=1000)
+boi_exp = np.where(boi_exp < 1, 1, boi_exp)
+boi_exp = np.where(boi_exp > 2, 2, boi_exp)
+
+# Lognormal distribution
+boi_log = lognorm.rvs(s=0.7, loc=1, scale=0.2, size=1000)
+boi_log = np.where(boi_log < 1, 1, boi_log)
+boi_log = np.where(boi_log > 2, 2, boi_log)
+
+# Triangular distribution
+boi_tria = triang.rvs(c=0.3, loc=1, scale=1, size=1000)
+
+# Uniform distribution
 boi_unif = uniform.rvs(loc=1, scale=1, size=1000)
-
-# %% Generating random values for thickness and area variables
-
-norm_val2 = norm.rvs(loc=50, scale=100, size=1000)
-expon_val2 = expon.rvs(loc=50, scale=100, size=1000)
-lognorm_val2 = lognorm.rvs(s=0.95, loc=50, scale=100, size=1000)
-triang_val2 = triang.rvs(c=0.3, loc=5, scale=10, size=1000)
 
 # %% Define values for area according to each distribution
 
-area_norm = norm_val2[np.where(norm_val2 >= 0)]
-area_exp = expon_val2[np.where(expon_val2 >= 0)]
-area_log = lognorm_values[np.where(lognorm_values >= 0)]
-area_triag = triang_val2[np.where(triang_val2 >= 0)]
-area_unif = uniform.rvs(loc=50, scale=500, size=1000)
+# Normal distribution
+area_norm = norm.rvs(loc=190, scale=100, size=1000)
+area_norm = np.where(area_norm < 50, 50, area_norm)
 
+# Exponential distribution
+area_exp = expon.rvs(loc=50, scale=100, size=1000)
+
+# Lognormal distribution
+area_log = lognorm.rvs(s=0.8, loc=50, scale=100, size=1000)
+
+# Triangular distribution
+area_triag = triang.rvs(c=0.3, loc=50, scale=450, size=1000)
+
+# Uniform distribution
+area_unif = uniform.rvs(loc=50, scale=500, size=1000)
 
 # %% Define values for thickness according to each distribution
 
-thickness_norm = norm_val2[np.where(norm_val2 >= 0)]
-thickness_exp = expon_val2[np.where(expon_val2 >= 0)]
-thickness_log = lognorm_val2[np.where(lognorm_val2 >= 0)]
-thickness_triag = triang_val2[np.where(triang_val2 >= 0)]
-thickness_unif = uniform.rvs(loc=5, scale=145, size=1000)
+# Normal distribution
+thickness_norm = norm.rvs(loc=50, scale=70, size=1000)
+thickness_norm = np.where(thickness_norm < 0, 0, thickness_norm)
+thickness_norm = np.where(thickness_norm > 180, 180, thickness_norm)
+
+# Exponential distribution
+
+thickness_exp = expon.rvs(loc=0, scale=50, size=1000)
+thickness_exp = np.where(thickness_exp > 180, 180, thickness_exp)
+
+# Lognormal distribution
+thickness_log = lognorm.rvs(s=0.6, loc=0, scale=40, size=1000)
+
+# Triangular distribution
+thickness_tria = triang.rvs(c=0.3, loc=0, scale=150, size=1000)
+
+# Uniform distribution
+thickness_unif = uniform.rvs(loc=0, scale=200, size=1000)
 
 # %% Plotting the distributions
 
