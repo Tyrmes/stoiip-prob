@@ -27,23 +27,23 @@ print(np.around(stoiip(area, h, poro, swc, boi), 2))
 # %% Defining random values for porosity from norm_values variable
 
 # Normal distribution
-norm_values = norm.rvs(loc=0.2, scale=0.3, size=1000)
-porosity_norm = np.where(norm_values < 0, 0, norm_values)
+porosity_norm = norm.rvs(loc=0.2, scale=0.3, size=1000)
+porosity_norm = np.where(porosity_norm < 0, 0, porosity_norm)
 porosity_norm = np.where(porosity_norm > 0.4, 0.4, porosity_norm)
 
 # Exponential distribution
-expon_values = expon.rvs(loc=0, scale=0.1, size=1000)
-porosity_exp = np.where(expon_values < 0, 0, expon_values)
-porosity_exp = np.where(expon_values > 0.4, 0.4, expon_values)
+porosity_exp = expon.rvs(loc=0, scale=0.1, size=1000)
+porosity_exp = np.where(porosity_exp < 0, 0, porosity_exp)
+porosity_exp = np.where(porosity_exp > 0.4, 0.4, porosity_exp)
 
 # Lognormal distribution
-lognorm_values = lognorm.rvs(s=0.8, loc=0, scale=0.2, size=1000)
-porosity_log = np.where(lognorm_values < 0, 0, lognorm_values)
-porosity_log = np.where(lognorm_values > 0.4, 0.4, lognorm_values)
+porosity_log = lognorm.rvs(s=0.8, loc=0, scale=0.2, size=1000)
+porosity_log = np.where(porosity_log < 0, 0, porosity_log)
+porosity_log = np.where(porosity_log > 0.4, 0.4, porosity_log)
 
 # Triangular distribution
-triang_values = triang.rvs(c=0.3, loc=0, scale=0.4, size=1000)
-porosity_tria = np.where(triang_values < 0, 0, lognorm_values)
+porosity_tria = triang.rvs(c=0.3, loc=0, scale=0.4, size=1000)
+porosity_tria = np.where(porosity_tria < 0, 0, porosity_tria)
 
 # Uniform distribution
 porosity_unif = uniform.rvs(loc=0, scale=0.4, size=1000)
