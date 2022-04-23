@@ -6,8 +6,8 @@ def main(workbook: xw.Book = None):
     wb = xw.Book.caller()
     sheet = wb.sheets[0]
 
-    sheet.range('B4:B8').name = 'values'
-    params = sheet['values'].options(np.array, transpose=True).value
+    # Cells B4 to B8 are called with the name Ranges, defined on the name manager from Ms Excel
+    params = sheet['Ranges'].options(np.array, transpose=True).value
     sheet['B10'].value = 7758 * params[0] * params[1] * params[2] * (1 - params[3]) / params[4]
 
 
