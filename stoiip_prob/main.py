@@ -27,14 +27,14 @@ print(np.around(stoiip(area, h, poro, swc, boi), 2))
 # %% Defining random values for porosity from norm_values variable
 
 # Normal distribution
-porosity_norm = norm.rvs(loc=0.2, scale=0.3, size=1000)
-porosity_norm = np.where(porosity_norm < 0, 0, porosity_norm)
-porosity_norm = np.where(porosity_norm > 0.4, 0.4, porosity_norm)
+porosity_norm = norm.rvs(loc=0.2, scale=0.05, size=1000)
+#porosity_norm = np.where(porosity_norm < 0, 0, porosity_norm)
+#porosity_norm = np.where(porosity_norm > 0.4, 0.4, porosity_norm)
 
 # Exponential distribution
-porosity_exp = expon.rvs(loc=0, scale=0.1, size=1000)
-porosity_exp = np.where(porosity_exp < 0, 0, porosity_exp)
-porosity_exp = np.where(porosity_exp > 0.4, 0.4, porosity_exp)
+porosity_exp = expon.rvs(loc=0, scale=0.05, size=1000)
+#porosity_exp = np.where(porosity_exp < 0, 0, porosity_exp)
+#porosity_exp = np.where(porosity_exp > 0.4, 0.4, porosity_exp)
 
 # Lognormal distribution
 porosity_log = lognorm.rvs(s=0.8, loc=0, scale=0.2, size=1000)
@@ -59,6 +59,7 @@ saturation_norm = np.where(saturation_norm > 1, 1, saturation_norm)
 saturation_exp = expon.rvs(loc=0, scale=0.2, size=1000)
 saturation_exp = np.where(saturation_exp < 0, 0, saturation_exp)
 saturation_exp = np.where(saturation_exp > 1, 1, saturation_exp)
+print(saturation_exp)
 
 # Lognormal distribution
 saturation_log = lognorm.rvs(s=0.8, loc=0, scale=0.2, size=1000)
@@ -132,8 +133,8 @@ thickness_unif = uniform.rvs(loc=0, scale=200, size=1000)
 
 # %% Plotting the distributions
 
-# plt.hist(thickness_unif)
-# plt.show()
+#plt.hist(saturation_exp)
+#plt.show()
 
 
 
