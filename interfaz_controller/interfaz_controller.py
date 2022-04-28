@@ -72,6 +72,10 @@ Lim_max = 'Límite max'
 
 
 def main(workbook: xw.Book = None):
+    """
+    This function connect Python with Ms. Excel trough xlwings in order to use the interface of this microsoft sotfware
+    as front-end to deploy results of deterministic and stocastic Stoiip.
+    """
     wb = xw.Book.caller()
     sheet = wb.sheets[0]
 
@@ -80,7 +84,7 @@ def main(workbook: xw.Book = None):
     params = sheet['Ranges'].options(np.array, transpose=True).value
     sheet['stoiip'].value = 7758 * params[0] * params[1] * params[2] * (1 - params[3]) / params[4]
 
-    # Stochastic Stoiip
+    # Stocastic Stoiip
     # Import dataframe from Ms. Excel
     df_stoiip = sheet['df_stoiip'].options(pd.DataFrame, index=False, expand='table').value
     # Define Excel cell number of iterations
