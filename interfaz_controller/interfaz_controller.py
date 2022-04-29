@@ -90,6 +90,10 @@ def main(workbook: xw.Book = None):
     # Define Excel cell number of iterations
     iterations = int(sheet['iterations'].value)
 
+    # Define seed
+    seed = int(sheet['Seed'].value)
+    np.random.seed(seed)
+
     # Define random values for stoiip variables
     area = param_stoiip(df_stoiip, 0, dist, loc, scale, iterations, sc, Lim_min, Lim_max)
     thickness = param_stoiip(df_stoiip, 1, dist, loc, scale, iterations, sc, Lim_min, Lim_max)
