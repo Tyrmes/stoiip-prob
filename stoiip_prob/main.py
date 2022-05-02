@@ -1,6 +1,5 @@
 import numpy as np
-import matplotlib.pyplot as plt
-from stoiip_prob.stoiip import stoiip
+from stoiip_prob.model.stoiip import stoiip
 from scipy.stats import expon, lognorm, norm, triang, uniform
 
 # %% Define input variables

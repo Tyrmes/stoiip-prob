@@ -1,10 +1,10 @@
 import pytest
 import numpy as np
-from stoiip_prob.stoiip import stoiip
+from stoiip_prob.model.stoiip import stoiip
 
 
 def test_stoiip():
-    """"
+    """
     This test was done to check if the stooip function
     works perfectly using single variables as its inputs.
     """
@@ -13,7 +13,7 @@ def test_stoiip():
 
 
 def test_stoiip_arrays():
-    """"
+    """
     This test is used to check if the stooip function works
     perfectly using arrays of different lengths as its inputs.
     """
@@ -24,8 +24,6 @@ def test_stoiip_arrays():
     boi = np.array([1.01, 1.1, 1.12])
 
     sto_array = stoiip(area, h, poro, swc, boi)
-    assert sto_array == pytest.approx(np.array([8710467.33, 12835963.64, 18286714.29]), rel=1e-6, abs=1e-12)
-
-
-
-
+    assert sto_array == pytest.approx(
+        np.array([8710467.33, 12835963.64, 18286714.29]), rel=1e-6, abs=1e-12
+    )
