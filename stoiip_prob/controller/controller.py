@@ -57,7 +57,6 @@ def main(workbook: xw.Book = None):
 
     # Define seed
     seed = int(sheet[SEED].value)
-    np.random.seed(seed)
 
     # Define random values for stoiip variables
     input_col_names = df_stoiip[INPUT_VAR_NAMES].to_list()
@@ -68,7 +67,7 @@ def main(workbook: xw.Book = None):
 
     for col, idx in input_dict.items():
         results_dict[col] = param_stoiip(
-            df_stoiip, idx, DIST, LOC, SCALE, iterations, SC, LIM_MIN, LIM_MAX
+            df_stoiip, idx, DIST, LOC, SCALE, iterations, SC, LIM_MIN, LIM_MAX, seed
         )
 
     # Calculation of stoiip's mean, std, P10, P50, and P90

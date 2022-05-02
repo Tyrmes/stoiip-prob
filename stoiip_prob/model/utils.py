@@ -12,6 +12,7 @@ def param_stoiip(
     sc_col=None,
     lim_min_col=None,
     lim_max_col=None,
+    seed=None,
 ):
     """
     This function has as a goal, return numpy arrays of any stoiip variable like area,
@@ -38,12 +39,20 @@ def param_stoiip(
         Maximin limit column
     iter
         Number of random variables
+    seed
+        Specifies the seed number to create the random number generator
 
     Returns
     -------
     numpy array of the any Stoiip parameter
 
     """
+
+    if seed is None:
+        rng = np.random.default_rng()
+    else:
+        rng = np.random.default_rng(seed)
+
     if df.loc[row, dist_col] == "Log-Normal" or df.loc[row, dist_col] == "Triangular":
         if df.loc[row, dist_col] == "Log-Normal":
             param = lognorm.rvs(
@@ -51,6 +60,7 @@ def param_stoiip(
                 loc=df.loc[row, loc_col],
                 scale=df.loc[row, scale_col],
                 size=iter,
+                random_state=rng,
             )
             param = np.where(
                 param < df.loc[row, lim_min_col], df.loc[row, lim_min_col], param
@@ -65,11 +75,15 @@ def param_stoiip(
                 loc=df.loc[row, loc_col],
                 scale=df.loc[row, scale_col],
                 size=iter,
+                random_state=rng,
             )
 
     elif df.loc[row, dist_col] == "Normal":
         param = norm.rvs(
-            loc=df.loc[row, loc_col], scale=df.loc[row, scale_col], size=iter
+            loc=df.loc[row, loc_col],
+            scale=df.loc[row, scale_col],
+            size=iter,
+            random_state=rng,
         )
         param = np.where(
             param < df.loc[row, lim_min_col], df.loc[row, lim_min_col], param
@@ -80,15 +94,23 @@ def param_stoiip(
 
     elif df.loc[row, dist_col] == "Exponencial":
         param = expon.rvs(
-            loc=df.loc[row, loc_col], scale=df.loc[row, scale_col], size=iter
+            loc=df.loc[row, loc_col],
+            scale=df.loc[row, scale_col],
+            size=iter,
+            random_state=rng,
         )
         param = np.where(
-            param > df.loc[row, lim_max_col], df.loc[row, lim_max_col], param
+            param > df.loc[row, lim_max_col],
+            df.loc[row, lim_max_col],
+            param,
         )
 
     elif df.loc[row, dist_col] == "Rectangular":
         param = uniform.rvs(
-            loc=df.loc[row, loc_col], scale=df.loc[row, scale_col], size=iter
+            loc=df.loc[row, loc_col],
+            scale=df.loc[row, scale_col],
+            size=iter,
+            random_state=rng,
         )
 
     return param
