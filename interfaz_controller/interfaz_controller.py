@@ -1,5 +1,7 @@
+import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+import seaborn as sns
 import xlwings as xw
 from scipy.stats import expon, lognorm, norm, triang, uniform
 
@@ -114,10 +116,25 @@ def main(workbook: xw.Book = None):
     stoiip = 7758 * area * thickness * porosity * (1 - swc) / boi
     sheet_1['stoiip_array'].options(np.array, transpose=True).value = stoiip
 
+    # Create histogram based on stoiip array
+    sns.set_style('white')
+    fig = plt.figure(figsize=(8, 6))
+    hist = sns.histplot(stoiip, color='lightgray', kde=True)
+    plt.axvline(sheet['p10_stoiip'].value, ymax=0.85, color='darkorange', linewidth=1.5, linestyle='--', label='P10')
+    plt.axvline(sheet['p50_stoiip'].value, ymax=0.85, color='gold', linewidth=1.5, linestyle='--', label='P50')
+    plt.axvline(sheet['p90_stoiip'].value, ymax=0.85, color='limegreen', linewidth=1.5, linestyle='--', label='P90')
+    plt.suptitle('Stoiip Probabilístico')
+    plt.legend(loc=0)
+    plt.show()
+
+    # Adding the plot to excel
+    plot = sheet.pictures.add(fig, name='Histograma', update=True, left=sheet.range('J1').left)
+
 
 if __name__ == "__main__":
     xw.Book("interfaz_controller.xlsm").set_mock_caller()
     main()
+
 
 
 
