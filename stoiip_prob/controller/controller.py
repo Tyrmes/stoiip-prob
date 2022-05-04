@@ -3,6 +3,9 @@ import pandas as pd
 import xlwings as xw
 from stoiip_prob.model.stoiip import stoiip
 from stoiip_prob.model.utils import param_stoiip
+import seaborn as sns
+import matplotlib.pyplot as plt
+from matplotlib import ticker
 
 # Sheets' name
 SHT_SUMMARY = "Resumen"
@@ -26,7 +29,9 @@ SEED = "Seed"
 DET_STOIIP_CALC = "stoiip"
 STOC_STOIIP_RESULTS = "stoiip_prob"
 STOC_STOIIP_ARR = "stoiip_array"
-# Predifined percentile values
+# Indexes of summary results
+P90_SUMM_IDX, P50_SUMM_IDX, P10_SUMM_IDX = 2, 3, 4
+# Predefined percentile values
 P10 = 90
 P50 = 50
 P90 = 10
@@ -95,6 +100,46 @@ def main(workbook: xw.Book = None):
 
     # Call stoiip's random values inside results worksheet
     sheet_1[STOC_STOIIP_ARR].options(index=False).value = df_results
+
+    # Create histogram based on stoiip array
+    eng_formatter = ticker.EngFormatter()
+    sns.set_style("white")
+    fig = plt.figure(figsize=(8, 6))
+    ax = sns.histplot(df_results[STOC_STOIIP_RESULTS], color="lightgray", kde=True)
+    plt.axvline(
+        stoiip_summary_results[P90_SUMM_IDX],
+        ymax=0.85,
+        color="darkorange",
+        linewidth=1.5,
+        linestyle="--",
+        label="P90",
+    )
+    plt.axvline(
+        stoiip_summary_results[P50_SUMM_IDX],
+        ymax=0.85,
+        color="gold",
+        linewidth=1.5,
+        linestyle="--",
+        label="P50",
+    )
+    plt.axvline(
+        stoiip_summary_results[P10_SUMM_IDX],
+        ymax=0.85,
+        color="limegreen",
+        linewidth=1.5,
+        linestyle="--",
+        label="P10",
+    )
+    ax.xaxis.set_major_formatter(eng_formatter)
+    plt.xlabel("STOIIP (STB)")
+    plt.suptitle("STOIIP Probabilístico")
+    plt.legend(loc=0)
+    plt.show()
+
+    # Adding the plot to excel
+    plot = sheet.pictures.add(
+        fig, name="Histograma", update=True, left=sheet.range("J1").left
+    )
 
 
 if __name__ == "__main__":
