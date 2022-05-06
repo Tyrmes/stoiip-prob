@@ -134,7 +134,6 @@ def main(workbook: xw.Book = None):
     plt.xlabel("STOIIP (STB)")
     plt.suptitle("STOIIP Probabilístico")
     plt.legend(loc=0)
-    plt.show()
 
     # Adding the plot to excel
     plot = sheet.pictures.add(
